@@ -15,20 +15,20 @@ POST http://localhost:3000/books
 Content-Type: application/json
 
 {
-  "name": "nodejs",
-  "price": 99
+  "name": "Vuejs",
+  "price": 33
 }
 
 
 ###
-DELETE http://localhost:3000/books/3
+DELETE http://localhost:3000/books/5e1540ced0278b8ebf06609d
 
 
 ###
-PUT http://localhost:3000/books/1
+PUT http://localhost:3000/books/5e1540ced0278b8ebf06609f
 Content-Type: application/json
 
 {
   "name": "Reactjs",
-  "price": 80
+  "price": 65
 }

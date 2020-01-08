@@ -1,42 +1,35 @@
 var express = require("express");
 var router = express.Router();
 
-var maxId = 2;
-var books = [
-  { _id: 1, name: "java", price: 85 },
-  { _id: 2, name: "python", price: 60 }
-];
+var bookDao = require('../dao/BookDao')
 
 router
   .route("/")
   .get((req, res) => {
-    let data = { code: 201, body: books };
-    res.json(data);
+    bookDao.findAllBooks((books) => {
+      res.json(books)
+    })
   })
   .post((req, res) => {
     let book = req.body;
-    book._id = ++maxId;
-    books.push(book);
-    let data = { code: 202, body: book };
-    res.json(data);
+    bookDao.addBook(book, (nb) => {
+      res.json(nb)
+    })
   });
 
 router.delete("/:id", (req, res) => {
   let id = req.params.id;
-  let index = books.findIndex(book => book._id == id);
-  books.splice(index, 1);
-  let data = { code: 203, body: {} };
-  res.json(data);
+  bookDao.deleteBook(id, (obj) => {
+    res.json(obj)
+  })
 });
 
 router.put("/:id", (req, res) => {
   let id = req.params.id;
   let book = req.body;
-  book._id = id;
-  let index = books.findIndex(book => book._id == id);
-  books.splice(index, 1, book);
-  let data = { code: 204, body: book };
-  res.json(data);
+  bookDao.updateBook(id, book, (obj) => {
+    res.json(obj)
+  })
 });
 
 module.exports = router;
